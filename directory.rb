@@ -34,8 +34,23 @@ end
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
+
+def print_by_letter(students)
+  puts "Please choose letter to print by:"
+  letter = gets.chomp
+  count = 1
+  students.each do |student|
+    if student[:name].chr == letter
+      puts "#{count}.#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+    count += 1
+  end
+end
+
+
 #nothing happens until we call the methods
 students = input_students
 print_header
 print(students)
 print_footer(students)
+print_by_letter(students)
