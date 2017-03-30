@@ -25,8 +25,8 @@ end
 
 def print(students)
   count = 1
-  students.each do |student|
-    puts "#{count}.#{student[:name]} (#{student[:cohort]} cohort)"
+  while count != students.length
+      puts "#{count}.#{students[count-1][:name]} (#{students[count-1][:cohort]} cohort)"
     count += 1
   end
 end
