@@ -47,6 +47,19 @@ def print_by_letter(students)
   end
 end
 
+def print_by_name_length(students)
+  puts "Please choose maximum name character length:"
+  length = gets.chomp.to_i
+  count = 1
+  students.each do |student|
+    if student[:name].length <= length
+      puts "#{count}.#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+    count =+ 1
+  end
+end
+
+
 
 #nothing happens until we call the methods
 students = input_students
@@ -54,3 +67,4 @@ print_header
 print(students)
 print_footer(students)
 print_by_letter(students)
+print_by_name_length(students)
