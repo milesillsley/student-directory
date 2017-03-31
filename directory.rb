@@ -4,13 +4,13 @@ def input_students
   # creates an empty array
   students = []
   #get the first name
-  name = gets.chomp.split.map(&:capitalize).join(' ')
+  name = gets.rstrip.split.map(&:capitalize).join(' ')
   # while the name is not empty, repeat his code
   while !name.empty? do
 
     puts "What cohort is #{name} part of?"
     puts "Please enter month"
-    cohort = gets.chomp.capitalize
+    cohort = gets.rstrip.capitalize
     cohort = "-" if cohort.empty?
     # add the student hash to the array
     students << {name: name, cohort: cohort.to_sym, hobbies: :hobbies, COB: :cob, height: :height}
@@ -20,7 +20,7 @@ def input_students
       puts "Now we have #{students.count} students".center(50)
     end
     # get another name from the user
-    name = gets.chomp.split.map(&:capitalize).join(' ')
+    name = gets.rstrip.split.map(&:capitalize).join(' ')
   end
   # return the array of students
   students
@@ -47,7 +47,7 @@ end
 
 def print_by_letter(students)
   puts "Please choose letter to print by:".center(50)
-  letter = gets.chomp
+  letter = gets.rstrip
   count = 1
   students.each do |student|
     if student[:name].chr == letter
@@ -59,7 +59,7 @@ end
 
 def print_by_name_length(students)
   puts "Please choose maximum name character length:".center(50)
-  length = gets.chomp.to_i
+  length = gets.rstrip.to_i
   count = 1
   students.each do |student|
     if student[:name].length <= length
