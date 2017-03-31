@@ -4,14 +4,19 @@ def input_students
   # creates an empty array
   students = []
   #get the first name
-  name = gets.chomp
+  name = gets.chomp.split.map(&:capitalize).join(' ')
   # while the name is not empty, repeat his code
   while !name.empty? do
+
+    puts "What cohort is #{name} part of?"
+    puts "Please enter month"
+    cohort = gets.chomp.capitalize
+    cohort = "-" if cohort.empty?
     # add the student hash to the array
-    students << {name: name, cohort: :november, hobbies: :music, COB: :cob, height: :about2m}
+    students << {name: name, cohort: cohort.to_sym, hobbies: :hobbies, COB: :cob, height: :height}
     puts "Now we have #{students.count} students".center(50)
     # get another name from the user
-    name = gets.chomp
+    name = gets.chomp.split.map(&:capitalize).join(' ')
   end
   # return the array of students
   students
