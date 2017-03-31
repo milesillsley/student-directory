@@ -14,7 +14,11 @@ def input_students
     cohort = "-" if cohort.empty?
     # add the student hash to the array
     students << {name: name, cohort: cohort.to_sym, hobbies: :hobbies, COB: :cob, height: :height}
-    puts "Now we have #{students.count} students".center(50)
+    if students.count == 1
+      puts "Now we have #{students.count} student".center(50)
+    else
+      puts "Now we have #{students.count} students".center(50)
+    end
     # get another name from the user
     name = gets.chomp.split.map(&:capitalize).join(' ')
   end
