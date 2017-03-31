@@ -1,6 +1,35 @@
 
 @students = [] # an empty array accessible to all methods
 
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def print_menu
+  puts "1. Input the students".center(50)
+  puts "2. Show the students".center(50)
+  puts "3. Save the list to students.csv".center(50)
+  puts "9. Exit".center(50)
+end
+
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "3"
+      save_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you mean, try again"
+  end
+end
+
 def input_students
   puts "Please enter the names of the students".center(50)
   puts "To finish, just hit return twice".center(50)
@@ -14,7 +43,7 @@ def input_students
     cohort = gets.rstrip.capitalize
     cohort = "-" if cohort.empty?
     # add the student hash to the array
-    @students << {name: name, cohort: cohort.to_sym, hobbies: :hobbies, COB: :cob, height: :height}
+    @students << {name: name, cohort: cohort.to_sym, hobbies: :hobbies, COB: :COB, height: :height}
     if @students.count == 1
       puts "Now we have #{@students.count} student".center(50)
     else
@@ -23,6 +52,24 @@ def input_students
     # get another name from the user
     name = gets.rstrip.split.map(&:capitalize).join(' ')
   end
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name],student[:cohort],student[:hobbies],student[:COB],student[:height]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
 end
 
 def print_header
@@ -70,38 +117,6 @@ def print_by_name_length
       puts "#{count}. #{student[:name]} (#{student[:cohort]} cohort)".center(50)
       count += 1
     end
-  end
-end
-
-def print_menu
-  puts "1. Input the students".center(50)
-  puts "2. Show the students".center(50)
-  puts "9. Exit".center(50)
-end
-
-def show_students
-  print_header
-  print_students_list
-  print_footer
-end
-
-def process(selection)
-  case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "9"
-      exit
-    else
-      puts "I don't know what you mean, try again"
-  end
-end
-
-def interactive_menu
-  loop do
-    print_menu
-    process(gets.chomp)
   end
 end
 
