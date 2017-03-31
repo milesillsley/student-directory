@@ -33,11 +33,15 @@ def print_header
 end
 
 def print(students)
-  student_list = students.sort_by { |student| student[:cohort] }
-  count = 1
-  while count != student_list.length + 1
-      puts "#{count}. #{student_list[count-1][:name]} (#{student_list[count-1][:cohort]} cohort)".center(50)
-    count += 1
+  if !students.empty?
+    student_list = students.sort_by { |student| student[:cohort] }
+    count = 1
+    while count != student_list.length + 1
+        puts "#{count}. #{student_list[count-1][:name]} (#{student_list[count-1][:cohort]} cohort)".center(50)
+      count += 1
+    end
+  else
+    puts "\n"
   end
 end
 
