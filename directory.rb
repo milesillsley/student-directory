@@ -2,9 +2,10 @@
 @students = [] # an empty array accessible to all methods
 
 def interactive_menu
+  try_load_students
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -29,7 +30,19 @@ def process(selection)
     when "9"
       exit
     else
-      puts "I don't know what you mean, try again"
+      puts "I don't know what you mean, try again\n".center(50)
+  end
+end
+
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the methos if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exists
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
   end
 end
 
@@ -37,13 +50,13 @@ def input_students
   puts "Please enter the names of the students".center(50)
   puts "To finish, just hit return twice".center(50)
   #get the first name
-  name = gets.rstrip.split.map(&:capitalize).join(' ')
+  name = STDIN.gets.rstrip.split.map(&:capitalize).join(' ')
   # while the name is not empty, repeat his code
   while !name.empty? do
 
     puts "What cohort is #{name} part of?"
     puts "Please enter month"
-    cohort = gets.rstrip.capitalize
+    cohort = STDIN.gets.rstrip.capitalize
     cohort = "-" if cohort.empty?
     # add the student hash to the array
     @students << {name: name, cohort: cohort.to_sym, hobbies: :hobbies, COB: :COB, height: :height}
@@ -53,7 +66,7 @@ def input_students
       puts "Now we have #{@students.count} students".center(50)
     end
     # get another name from the user
-    name = gets.rstrip.split.map(&:capitalize).join(' ')
+    name = STDIN.gets.rstrip.split.map(&:capitalize).join(' ')
   end
 end
 
@@ -75,8 +88,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     @students << {name: name, cohort: cohort.to_sym}
