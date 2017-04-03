@@ -36,12 +36,14 @@ end
 
 def try_load_students
   filename = ARGV.first # first argument from the command line
-  return if filename.nil? # get out of the methos if it isn't given
-  if File.exists?(filename) # if it exists
+  if filename.nil? # get out of the method if it isn't given
+    load_students
+    puts "Loaded #{@students.count} students from students.csv".center(50)
+  elsif File.exists?(filename) # if it exists
     load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
+    puts "Loaded #{@students.count} students from #{filename}".center(50)
   else # if it doesn't exists
-    puts "Sorry, #{filename} doesn't exist."
+    puts "Sorry, #{filename} doesn't exist.".center(50)
     exit # quit the program
   end
 end
@@ -99,7 +101,7 @@ end
 
 def add_student(*args)
   name, cohort, hobbies, cob, height = *args
-  @students << {name: name, cohort: cohort.to_sym, hobbies: :hobbies, COB: :cob, height: :height}
+  @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, COB: cob, height: height}
 end
 
 def print_header
