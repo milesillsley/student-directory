@@ -14,20 +14,33 @@ def print_menu
   puts "2. Show the students".center(50)
   puts "3. Save the list to students.csv".center(50)
   puts "4. Load the students from students.csv".center(50)
+  puts "5. List students by first letter".center(50)
+  puts "6. List students by maximum name length".center(50)
   puts "9. Exit".center(50)
 end
 
 def process(selection)
   case selection
     when "1"
+      puts "You have chosen '1. Input the students'\n".center(50)
       input_students
     when "2"
+      puts "You have chosen '2. Show the students'\n".center(50)
       show_students
     when "3"
+      puts "You have chosen '3. Save the list to students.csv'\n".center(50)
       save_students
     when "4"
+      puts "You have chosen '4. Load the students from students.csv'\n".center(50)
       load_students
+    when "5"
+      puts "You have chosen '5. List students by first letter'\n".center(50)
+      print_by_letter
+    when "6"
+      puts "You have chosen '6. List students by maximum name length'\n".center(50)
+      print_by_name_length
     when "9"
+      puts "Goodbye."
       exit
     else
       puts "I don't know what you mean, try again\n".center(50)
@@ -130,26 +143,30 @@ end
 
 def print_by_letter
   puts "Please choose letter to print by:".center(50)
-  letter = gets.rstrip
+  letter = STDIN.gets.rstrip.capitalize
   count = 1
+  print_header
   @students.each do |student|
     if student[:name].chr == letter
       puts "#{count}. #{student[:name]} (#{student[:cohort]} cohort)".center(50)
       count += 1
     end
   end
+  print_footer
 end
 
 def print_by_name_length
   puts "Please choose maximum name character length:".center(50)
-  length = gets.rstrip.to_i
+  length = STDIN.gets.rstrip.to_i
   count = 1
+  print_header
   @students.each do |student|
     if student[:name].length <= length
       puts "#{count}. #{student[:name]} (#{student[:cohort]} cohort)".center(50)
       count += 1
     end
   end
+  print_footer
 end
 
 
