@@ -12,8 +12,8 @@ end
 def print_menu
   puts "1. Input the students".center(50)
   puts "2. Show the students".center(50)
-  puts "3. Save the list to students.csv".center(50)
-  puts "4. Load the students from students.csv".center(50)
+  puts "3. Save the list of students".center(50)
+  puts "4. Load the list of students".center(50)
   puts "5. List students by first letter".center(50)
   puts "6. List students by maximum name length".center(50)
   puts "9. Exit".center(50)
@@ -28,11 +28,11 @@ def process(selection)
       puts "You have chosen '2. Show the students'\n".center(50)
       show_students
     when "3"
-      puts "You have chosen '3. Save the list to students.csv'\n".center(50)
-      save_students
+      puts "You have chosen '3. Save the list of students'\n".center(50)
+      save_students_as
     when "4"
-      puts "You have chosen '4. Load the students from students.csv'\n".center(50)
-      load_students
+      puts "You have chosen '4. Load the list of students'\n".center(50)
+      load_students_file
     when "5"
       puts "You have chosen '5. List students by first letter'\n".center(50)
       print_by_letter
@@ -40,7 +40,7 @@ def process(selection)
       puts "You have chosen '6. List students by maximum name length'\n".center(50)
       print_by_name_length
     when "9"
-      puts "Goodbye."
+      puts "Goodbye.".center(50)
       exit
     else
       puts "I don't know what you mean, try again\n".center(50)
@@ -91,9 +91,8 @@ def show_students
   print_footer
 end
 
-def save_students
-  # open the file for writing
-  file = File.open("students.csv", "w")
+def save_students(filename = "students.csv")
+    file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name],student[:cohort],student[:hobbies],student[:COB],student[:height]]
@@ -101,6 +100,43 @@ def save_students
     file.puts csv_line
   end
   file.close
+end
+
+def save_students_as
+  puts "Please enter name of file to save as?".center(50)
+  puts "Press return for default (students.csv)".center(50)
+  filename = STDIN.gets.chomp
+  if filename.empty?
+    save_students
+    puts "Saved #{@students.count} students to students.csv".center(50)
+  elsif File.exists?(filename) # if it exists
+    puts "#{filename} already exists. Overwrite? (yes/no)".center(50)
+    case STDIN.gets.chomp
+    when "yes"
+      save_students(filename)
+      puts "Saved #{@students.count} students to #{filename}".center(50)
+    when "no"
+      exit
+    end
+  else # if it doesn't exists
+    save_students(filename)
+    puts "Saved #{@students.count} students to #{filename}".center(50)
+  end
+end
+
+def load_students_file
+  puts "Please enter name of file to load".center(50)
+  puts "Press return for default (students.csv)".center(50)
+  filename = STDIN.gets.chomp
+  if filename.empty?
+    load_students
+    puts "Loaded #{@students.count} students from students.csv".center(50)
+  elsif File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} students from #{filename}".center(50)
+  else
+    puts "Sorry, #{filename} doesn't exist.".center(50)
+  end
 end
 
 def load_students(filename = "students.csv")
