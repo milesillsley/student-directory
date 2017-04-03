@@ -16,6 +16,7 @@ def print_menu
   puts "4. Load the list of students".center(50)
   puts "5. List students by first letter".center(50)
   puts "6. List students by maximum name length".center(50)
+  puts "7. Print code".center(50)
   puts "9. Exit".center(50)
 end
 
@@ -39,6 +40,8 @@ def process(selection)
     when "6"
       puts "You have chosen '6. List students by maximum name length'\n".center(50)
       print_by_name_length
+    when "7"
+      print_code
     when "9"
       puts "Goodbye.".center(50)
       exit
@@ -147,6 +150,7 @@ def load_students(filename = "students.csv")
   end
 end
 
+
 def add_student(*args)
   name, cohort, hobbies, cob, height = *args
   @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, COB: cob, height: height}
@@ -202,6 +206,14 @@ def print_by_name_length
     end
   end
   print_footer
+end
+
+def print_code
+  File.open($0, "r") do |f|
+    f.readlines.each do |line|
+      puts line
+    end
+  end
 end
 
 
